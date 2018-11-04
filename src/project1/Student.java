@@ -1,13 +1,12 @@
 package project1;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Student {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="sys_num")
     //@GeneratedValue(strategy=GenerationType.AUTO)
     private int sysNum;
@@ -22,14 +21,10 @@ public class Student {
     private String courseName;
 
     @Column(name="semester")
-    private int semester;
+    private String semester;
 
     public int getSysNum() {
         return sysNum;
-    }
-
-    public void setSyNum(int sysNum) {
-        this.sysNum = sysNum;
     }
 
     public String getFirstName() {
@@ -37,7 +32,9 @@ public class Student {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        if(isAlpha(firstName)){
+            this.firstName = firstName;
+        }
     }
 
     public String getLastName() {
@@ -45,7 +42,9 @@ public class Student {
     }
 
     public void setLastname(String lastName) {
-        this.lastName = lastName;
+        if(isAlpha(lastName)){
+            this.lastName = lastName;
+        }
     }
 
     public String getCourseName() {
@@ -53,15 +52,27 @@ public class Student {
     }
 
     public void setCourseName(String courseName) {
-        this.courseName = courseName;
+        if(isAlpha(courseName)){
+            this.courseName = courseName;
+        }
     }
 
-    public int getSemester() {
+    public String getSemester() {
         return semester;
     }
 
-    public void setSemester(int semester) {
-        this.semester = semester;
+    public void setSemester(String semester) {
+        if(semester.matches("[0-9]+")){
+            int result = Integer.parseInt(semester);
+            if(result > 0 && result < 11){
+                String semester2 = Integer.toString(result);
+                this.semester = semester2;
+            }
+        }
+    }
+
+    private boolean isAlpha(String name) {
+        return name.matches("[a-zA-Z]+");
     }
 
     @Override

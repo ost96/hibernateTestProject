@@ -27,19 +27,32 @@ public class Student_DAO {
 
     protected void insertData(){
         Student student = new Student();
-        student.setFirstName("Kuba");
-        student.setLastname("Ostrowski");
-        student.setCourseName("IT");
-        student.setSemester(6);
+        student.setFirstName("Ania");
+        student.setLastname("Nowak");
+        student.setCourseName("AIR");
+        student.setSemester("2");
+
+        if(student.getFirstName() == null){
+            System.out.println("Firstname must contain letters only");
+            return;
+        }
+        if(student.getLastName() == null){
+            System.out.println("Lastname must contain letters only");
+            return;
+        }
+        if(student.getCourseName() == null){
+            System.out.println("CourseName must contain letters only");
+            return;
+        }
+        if(student.getSemester() == null){
+            System.out.println("Semester must be a number greater than 0 and smaller than 11");
+            return;
+        }
 
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
             session.save(student);
-            //session.update(student);
-            //session.delete(student);
-            //Student selectedStudent = (Student) session.get(student.getClass(), student.getSysNum());
-            //System.out.println(selectedStudent);
             session.getTransaction().commit();
         } catch (Exception e) {
             if (session.getTransaction() != null)
@@ -50,6 +63,12 @@ public class Student_DAO {
                 session.close();
         }
     }
+
+    //Poniższe metody wymagają swoich własnych bloków try-catch we własnych metodach updateData(), deleteData(), readData()
+    //session.update(student);
+    //session.delete(student);
+    //Student selectedStudent = (Student) session.get(student.getClass(), student.getSysNum());
+    //System.out.println(selectedStudent);
 
     public static void main(String[] args){
         Student_DAO student_dao = new Student_DAO();
