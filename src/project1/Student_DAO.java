@@ -9,6 +9,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 public class Student_DAO {
 
     protected SessionFactory sessionFactory;
+    protected Session session;
 
     protected void setup() {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
@@ -31,12 +32,23 @@ public class Student_DAO {
         student.setCourseName("IT");
         student.setSemester(6);
 
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(student);
-        session.getTransaction().commit();
-        session.close();
-
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.save(student);
+            //session.update(student);
+            //session.delete(student);
+            //Student selectedStudent = (Student) session.get(student.getClass(), student.getSysNum());
+            //System.out.println(selectedStudent);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null)
+                session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            if (session != null)
+                session.close();
+        }
     }
 
     public static void main(String[] args){

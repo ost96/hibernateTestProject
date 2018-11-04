@@ -1,5 +1,6 @@
 package project1;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,19 +8,28 @@ import javax.persistence.Id;
 public class Student {
 
     @Id
-    private int sys_num;
+    @Column(name="sys_num")
+    //@GeneratedValue(strategy=GenerationType.AUTO)
+    private int sysNum;
 
+    @Column(name="first_name")
     private String firstName;
-    private String lastname;
+
+    @Column(name="last_name")
+    private String lastName;
+
+    @Column(name="course_name")
     private String courseName;
+
+    @Column(name="semester")
     private int semester;
 
-    public int getSys_num() {
-        return sys_num;
+    public int getSysNum() {
+        return sysNum;
     }
 
-    public void setSys_num(int sys_num) {
-        this.sys_num = sys_num;
+    public void setSyNum(int sysNum) {
+        this.sysNum = sysNum;
     }
 
     public String getFirstName() {
@@ -30,12 +40,12 @@ public class Student {
         this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastname(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getCourseName() {
@@ -52,5 +62,10 @@ public class Student {
 
     public void setSemester(int semester) {
         this.semester = semester;
+    }
+
+    @Override
+    public String toString() {
+        return "sys_num: " + sysNum + ", firstName: " + firstName + ", lastName: " + lastName + ", courseName: " + courseName + ", semester: " + semester + "\n";
     }
 }
