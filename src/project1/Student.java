@@ -8,7 +8,6 @@ public class Student {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="sys_num")
-    //@GeneratedValue(strategy=GenerationType.AUTO)
     private int sysNum;
 
     @Column(name="first_name")
