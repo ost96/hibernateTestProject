@@ -103,8 +103,22 @@ public class Student_DAO {
     public static void main(String[] args) {
         Student_DAO student_dao = new Student_DAO();
         student_dao.setup();
-        Student student = new Student(-1, "Marcin", "Testowy", "IT", 1);
+
+        Student student;
+        /*
+        //Sample input
+        student = new Student("Kuba", "Ostrowski", "Computer Science", 6);
         student_dao.save(student);
+        student = new Student("Jacek", "Wilczyński", "Computer Science", 6);
+        student_dao.save(student);
+        student = new Student("Paweł", "Lis", "Robotics", 4);
+        student_dao.save(student);
+        student = new Student("Michał", "Jakubiak", "Electrical Engineering", 7);
+        student_dao.save(student);
+        student = new Student("Konrad", "Bielecki", "Computer Science", 2);
+        student_dao.save(student);
+        */
+
         student_dao.exit();
     }
 }

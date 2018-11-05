@@ -9,17 +9,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class Student_DAOTest {
+public class Student_DAOUpdateTest {
+
     private static Student_DAO student_dao;
     private static Student student;
     private boolean success;
-
-    @BeforeClass
-    public static void setup() {
-        student_dao = new Student_DAO();
-        student_dao.setup();
-        populateDatabase();
-    }
 
     private static void populateDatabase() {
         student_dao = new Student_DAO();
@@ -36,59 +30,62 @@ public class Student_DAOTest {
         student_dao.save(student);
     }
 
+    @BeforeClass
+    public static void setup() {
+        student_dao = new Student_DAO();
+        student_dao.setup();
+        populateDatabase();
+    }
+
     @Test
-    public void testSave_noSysNum() {
+    public void testUpdate_noSysNum() {
         student = new Student("Marcin", "Testowy", "IT", 1);
-        success = student_dao.save(student);
-        // should work
-        assertTrue(success);
+        success = student_dao.update(student);
+        // should not work, to update data sysNum is required
+        assertFalse(success);
     }
 
     @Test
-    public void testSave_uniqueSysNum() {
+    public void testUpdate_notExistingSysNum() {
         student = new Student(7, "Marcin", "Testowy", "IT", 1);
-        success = student_dao.save(student);
-        // should work
-        assertTrue(success);
+        success = student_dao.update(student);
+        // should not work, existing sysNum is required
+        assertFalse(success);
     }
 
     @Test
-    public void testSave_duplicateSysNum() {
-        student = new Student(1, "Marcin", "Testowy", "IT", 1);
-        success = student_dao.save(student);
-        // should work, because the sysNum is generated automatically anyway
-        assertTrue(success);
-    }
-
-    @Test
-    public void testSave_negativeSysNum() {
+    public void testUpdate_negativeSysNum() {
         student = new Student(-1, "Marcin", "Testowy", "IT", 1);
-        success = student_dao.save(student);
-        // should work, because the sysNum is generated automatically anyway
-        assertTrue(success);
+        success = student_dao.update(student);
+        // should not work, because ther won't be negative sysNums in database
+        assertFalse(success);
     }
 
     @Test
-    public void testSave_validNullableData() {
+    public void testUpdate_validNullableData() {
         student = new Student("Marcin", "Testowy");
-        success = student_dao.save(student);
-        // should work, because 'course_name' and 'semester' columns can be null
-        assertTrue(success);
+        success = student_dao.update(student);
+        // should not work, because there is no sysNum given
+        assertFalse(success);
     }
 
     @Test
-    public void testSave_invalidNullableData() {
+    public void testUpdate_invalidNullableData() {
         student = new Student();
-        success = student_dao.save(student);
+        success = student_dao.update(student);
         // shouldn't work, because the 'first_name' and 'last_name' columns can't be null
         assertFalse(success);
     }
 
-    @After
-    public void cleanup() {
+    @Test
+    public void testUpdate_validDataAllFields() {
+        student = new Student(6, "Marcin", "Testowy", "IT", 1);
+        student_dao.save(student); //assumption that save method is working correctly
+        success = student_dao.update(student);
         if (success)
             student_dao.delete(student);
-        success = false;
+        // should work
+        assertTrue(success);
     }
 
     @AfterClass
