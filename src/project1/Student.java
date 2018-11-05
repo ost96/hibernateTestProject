@@ -1,21 +1,19 @@
 package project1;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Student {
 
     @Id
-    @Column(name="sys_num")
-    //@GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="sys_num", nullable = false)
     private int sysNum;
 
-    @Column(name="first_name")
+    @Column(name="first_name", nullable = false)
     private String firstName;
 
-    @Column(name="last_name")
+    @Column(name="last_name", nullable = false)
     private String lastName;
 
     @Column(name="course_name")
@@ -26,12 +24,20 @@ public class Student {
 
     public Student() {}
 
-    public Student(int sysNum, String firstName, String lastName, String courseName, int semester) {
-        this.sysNum = sysNum;
+    public Student(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Student(String firstName, String lastName, String courseName, int semester) {
+        this(firstName, lastName);
         this.courseName = courseName;
         this.semester = semester;
+    }
+
+    public Student(int sysNum, String firstName, String lastName, String courseName, int semester) {
+        this(firstName, lastName, courseName, semester);
+        this.sysNum = sysNum;
     }
 
     public int getSysNum() {
