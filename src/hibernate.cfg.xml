@@ -13,7 +13,8 @@
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <property name="show_sql">true</property>
 
-        <!-- Drop and re-create the database schema on startup -->
+        <!--Use create to Drop and re-create the database schema on startup: REQUIRED FOR TESTING -->
+        <!--Use update to save to existing database: REQUIRED FOR DEPLOYMENT -->
         <property name="hbm2ddl.auto">create</property>
 
         <mapping class = "project1.Student" />
