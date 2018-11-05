@@ -24,11 +24,21 @@ public class Student {
     @Column(name="semester")
     private int semester;
 
+    public Student() {}
+
+    public Student(int sysNum, String firstName, String lastName, String courseName, int semester) {
+        this.sysNum = sysNum;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.courseName = courseName;
+        this.semester = semester;
+    }
+
     public int getSysNum() {
         return sysNum;
     }
 
-    public void setSyNum(int sysNum) {
+    public void setSysNum(int sysNum) {
         this.sysNum = sysNum;
     }
 
@@ -66,6 +76,6 @@ public class Student {
 
     @Override
     public String toString() {
-        return "sys_num: " + sysNum + ", firstName: " + firstName + ", lastName: " + lastName + ", courseName: " + courseName + ", semester: " + semester + "\n";
+        return "sys_num: " + sysNum + ", firstName: " + firstName + ", lastName: " + lastName + ", courseName: " + courseName + ", semester: " + semester;
     }
 }

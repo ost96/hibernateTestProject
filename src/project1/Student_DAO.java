@@ -25,21 +25,30 @@ public class Student_DAO {
         sessionFactory.close();
     }
 
-    protected void insertData(){
-        Student student = new Student();
-        student.setFirstName("Kuba");
-        student.setLastname("Ostrowski");
-        student.setCourseName("IT");
-        student.setSemester(6);
-
+    protected boolean save(Student student) {
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
             session.save(student);
-            //session.update(student);
-            //session.delete(student);
-            //Student selectedStudent = (Student) session.get(student.getClass(), student.getSysNum());
-            //System.out.println(selectedStudent);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            if (session.getTransaction() != null)
+                session.getTransaction().rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (session != null)
+                session.close();
+        }
+    }
+
+    protected Student get(Student student) {
+        Student selectedStudent = null;
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            selectedStudent = session.get(student.getClass(), student.getSysNum());
             session.getTransaction().commit();
         } catch (Exception e) {
             if (session.getTransaction() != null)
@@ -49,12 +58,51 @@ public class Student_DAO {
             if (session != null)
                 session.close();
         }
+        return selectedStudent;
     }
 
-    public static void main(String[] args){
+    protected boolean update(Student student) {
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.update(student);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            if (session.getTransaction() != null)
+                session.getTransaction().rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (session != null)
+                session.close();
+        }
+    }
+
+    protected boolean delete(Student student) {
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.delete(student);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            if (session.getTransaction() != null)
+                session.getTransaction().rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (session != null)
+                session.close();
+        }
+    }
+
+    public static void main(String[] args) {
         Student_DAO student_dao = new Student_DAO();
         student_dao.setup();
-        student_dao.insertData();
+        Student student = new Student(0, "Kuba", "Ostrowski", "IT", 6);
+        Student selectedStudent = student_dao.get(student);
+        System.out.println(selectedStudent);
         student_dao.exit();
     }
 }
