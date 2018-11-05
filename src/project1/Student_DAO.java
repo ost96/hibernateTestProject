@@ -6,6 +6,8 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.io.Serializable;
+
 public class Student_DAO {
 
     protected SessionFactory sessionFactory;
@@ -29,7 +31,8 @@ public class Student_DAO {
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
-            session.save(student);
+            int id = (int) session.save(student);
+            System.out.println(id);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
@@ -100,9 +103,8 @@ public class Student_DAO {
     public static void main(String[] args) {
         Student_DAO student_dao = new Student_DAO();
         student_dao.setup();
-        Student student = new Student(0, "Kuba", "Ostrowski", "IT", 6);
-        Student selectedStudent = student_dao.get(student);
-        System.out.println(selectedStudent);
+        Student student = new Student(-1, "Marcin", "Testowy", "IT", 1);
+        student_dao.save(student);
         student_dao.exit();
     }
 }
