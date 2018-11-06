@@ -7,6 +7,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Student_DAO {
 
@@ -100,6 +101,10 @@ public class Student_DAO {
         }
     }
 
+    protected List<Student> getStudsByClass(String course ,int semester )
+    {
+        return null;
+    }
     public static void main(String[] args) {
         Student_DAO student_dao = new Student_DAO();
         student_dao.setup();
