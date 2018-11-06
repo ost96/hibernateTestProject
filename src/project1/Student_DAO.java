@@ -2,6 +2,7 @@ package project1;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -108,9 +109,12 @@ public class Student_DAO {
     }
     public List<Student> getAll()
     {
-        Query q= session.createQuery("select * from  Student;");
-        List<Student> l=q.list();
-        return l;
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<Student>  l =   session.createQuery("select * from Student;").list();
+        session.getTransaction().commit();
+       session.close();
+       return l;
     }
     public static void main(String[] args) {
         Student_DAO student_dao = new Student_DAO();
