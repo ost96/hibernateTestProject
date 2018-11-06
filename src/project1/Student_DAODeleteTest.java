@@ -43,4 +43,9 @@ public class Student_DAODeleteTest {
         succes=student_dao.delete(new Student());
         assertFalse(succes);
     }
+    @Test
+    public  void testDelWrongNum(){
+        succes=student_dao.delete(new Student(14,"Konrad", "Bielecki", "Computer Science", 2));
+        assertFalse(succes);
+    }
 }
