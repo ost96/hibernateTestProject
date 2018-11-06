@@ -3,6 +3,8 @@ package project1;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class Student_DAODeleteTest {
@@ -34,9 +36,12 @@ public class Student_DAODeleteTest {
 
         @Test
          public  void testSySnDelete(){
+            List<Student> predel=student_dao.getAll();
+            predel.remove(arbStudRef);
             succes=student_dao.delete(arbStudRef);
             assert(succes);
             assertNull(student_dao.get(arbStudRef));
+            assertEquals (predel,student_dao.getAll());
         }
     @Test
     public  void testDelNoExist(){

@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
 
 import java.io.Serializable;
 import java.util.List;
@@ -104,6 +105,12 @@ public class Student_DAO {
     protected List<Student> getStudsByClass(String course ,int semester )
     {
         return null;
+    }
+    public List<Student> getAll()
+    {
+        Query q= session.createQuery("select * from  Student;");
+        List<Student> l=q.list();
+        return l;
     }
     public static void main(String[] args) {
         Student_DAO student_dao = new Student_DAO();
