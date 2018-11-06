@@ -84,4 +84,13 @@ public class Student {
     public String toString() {
         return "sys_num: " + sysNum + ", firstName: " + firstName + ", lastName: " + lastName + ", courseName: " + courseName + ", semester: " + semester;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == null) {
+            return false;
+        }
+        return  ((Student)o).getSysNum()==sysNum ;
+    }
 }
